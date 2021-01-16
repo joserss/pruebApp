@@ -15,48 +15,6 @@
  * =============================================================================
  */
 
-const videoElement = document.querySelector('video');
-const videoSelect = document.querySelector('select#videoSource');
-const selectors = [videoSelect];
-
-
-function gotDevices(deviceInfos) {
-    // Handles being called several times to update labels. Preserve values.
-    const values = selectors.map(select => select.value);
-    selectors.forEach(select => {
-      while (select.firstChild) {
-        select.removeChild(select.firstChild);
-      }
-    });
-    for (let i = 0; i !== deviceInfos.length; ++i) {
-      const deviceInfo = deviceInfos[i];
-      const option = document.createElement('option');
-      option.value = deviceInfo.deviceId;
-      if (deviceInfo.kind === 'videoinput') {
-        option.text = deviceInfo.label || `camera ${videoSelect.length + 1}`;
-        videoSelect.appendChild(option);
-      } else {
-        console.log('Some other kind of source/device: ', deviceInfo);
-      }
-    }
-    selectors.forEach((select, selectorIndex) => {
-      if (Array.prototype.slice.call(select.childNodes).some(n => n.value === values[selectorIndex])) {
-        select.value = values[selectorIndex];
-      }
-    });
-}
-
-navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError);
-
-
-
-
-videoSelect.onchange = start;
-
-
-
-
-
 const video = document.getElementById('webcam');
 const liveView = document.getElementById('liveView');
 const demosSection = document.getElementById('demos');
