@@ -17,6 +17,10 @@
 const video = document.getElementById('webcam');
 const button = document.getElementById('webcamButton');
 const select = document.getElementById('select');
+const liveView = document.getElementById('liveView');
+
+const demosSection = document.getElementById('demos');
+var model = undefined;
 let currentStream;
 
 function stopMediaTracks(stream) {
@@ -55,11 +59,16 @@ button.addEventListener('click', event => {
     video: videoConstraints,
     audio: false
   };
+  if (!model) {
+    return;
+  }
+
   navigator.mediaDevices
     .getUserMedia(constraints)
     .then(stream => {
       currentStream = stream;
       video.srcObject = stream;
+      video.addEventListener('loadeddata', predictWebcam);
       return navigator.mediaDevices.enumerateDevices();
     })
     .then(gotDevices)
@@ -72,10 +81,7 @@ navigator.mediaDevices.enumerateDevices().then(gotDevices);
 
 
 //----------------------------------------------------------------------------------------------------------------------------------
-const liveView = document.getElementById('liveView');
 
-const demosSection = document.getElementById('demos');
-var model = undefined;
 
 
 /*
@@ -91,16 +97,16 @@ function getUserMediaSupported() {
 // If webcam supported, add event listener to button for when user
 // wants to activate it to call enableCam function which we will 
 // define in the next step.
+
 if (getUserMediaSupported()) {
-  enableWebcamButton.addEventListener('click', enableCam);
+  button.addEventListener('click', enableCam);
 } else {
   console.warn('getUserMedia() is not supported by your browser');
 }
 
-*/
 
 
-// Placeholder function for next step. Paste over this in the next step.
+
 function enableCam(event) {
   // Only continue if the COCO-SSD has finished loading.
   if (!model) {
@@ -119,7 +125,7 @@ function enableCam(event) {
       },
  
   };
-  */
+  
 
   const getCameraSelection = async () => {
     const devices = await navigator.mediaDevices.enumerateDevices();
@@ -139,6 +145,8 @@ function enableCam(event) {
     video.addEventListener('loadeddata', predictWebcam);
   });
 }
+*/
+
 
 
 
