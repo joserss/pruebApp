@@ -41,7 +41,7 @@ function gotDevices(mediaDevices) {
   });
 }
 
-button.addEventListener('click', event => {
+webcamButton.addEventListener('click', event => {
   if (typeof currentStream !== 'undefined') {
     stopMediaTracks(currentStream);
   }
@@ -71,9 +71,9 @@ button.addEventListener('click', event => {
 navigator.mediaDevices.enumerateDevices().then(gotDevices);
 
 
+//----------------------------------------------------------------------------------------------------------------------------------
 
-
-
+/*
 // const video = document.getElementById('webcam');
 const liveView = document.getElementById('liveView');
 const demosSection = document.getElementById('demos');
@@ -191,3 +191,4 @@ function predictWebcam() {
   });
 }
 
+*/
