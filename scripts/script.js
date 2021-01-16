@@ -41,7 +41,7 @@ function gotDevices(mediaDevices) {
   });
 }
 
-webcamButton.addEventListener('click', event => {
+button.addEventListener('click', event => {
   if (typeof currentStream !== 'undefined') {
     stopMediaTracks(currentStream);
   }
@@ -72,11 +72,15 @@ navigator.mediaDevices.enumerateDevices().then(gotDevices);
 
 
 //----------------------------------------------------------------------------------------------------------------------------------
+const liveView = document.getElementById('liveView');
+
+const demosSection = document.getElementById('demos');
+var model = undefined;
+
 
 /*
 // const video = document.getElementById('webcam');
 const liveView = document.getElementById('liveView');
-const demosSection = document.getElementById('demos');
 const enableWebcamButton = document.getElementById('webcamButton');
 
 function getUserMediaSupported() {
@@ -93,13 +97,16 @@ if (getUserMediaSupported()) {
   console.warn('getUserMedia() is not supported by your browser');
 }
 
+*/
+
+
 // Placeholder function for next step. Paste over this in the next step.
 function enableCam(event) {
   // Only continue if the COCO-SSD has finished loading.
   if (!model) {
     return;
   }
-  
+  /*
   // Hide the button once clicked.
   event.target.classList.add('removed');  
   
@@ -112,6 +119,7 @@ function enableCam(event) {
       },
  
   };
+  */
 
   const getCameraSelection = async () => {
     const devices = await navigator.mediaDevices.enumerateDevices();
@@ -121,7 +129,7 @@ function enableCam(event) {
     });
     cameraOptions.innerHTML = options.join('');
   };
-
+  
 
 
 
@@ -135,7 +143,7 @@ function enableCam(event) {
 
 
 // Store the resulting model in the global scope of our app.
-var model = undefined;
+
 
 // Before we can use COCO-SSD class we must wait for it to finish
 // loading. Machine Learning models can be large and take a moment 
@@ -191,4 +199,3 @@ function predictWebcam() {
   });
 }
 
-*/
