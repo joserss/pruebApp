@@ -18,7 +18,6 @@ const video = document.getElementById('webcam');
 const button = document.getElementById('webcamButton');
 const select = document.getElementById('select');
 const liveView = document.getElementById('liveView');
-
 const demosSection = document.getElementById('demos');
 var model = undefined;
 let currentStream;
@@ -46,6 +45,9 @@ function gotDevices(mediaDevices) {
 }
 
 button.addEventListener('click', event => {
+    if (!model) {
+        return;
+    }
   if (typeof currentStream !== 'undefined') {
     stopMediaTracks(currentStream);
   }
@@ -59,9 +61,7 @@ button.addEventListener('click', event => {
     video: videoConstraints,
     audio: false
   };
-  if (!model) {
-    return;
-  }
+  
 
   navigator.mediaDevices
     .getUserMedia(constraints)
