@@ -14,7 +14,12 @@
     <p>Wait for the model to load before clicking the button to enable the webcam - at which point it will become visible to use.</p>
 
 
-    <select id="videoSource"></select>
+    <div class="controls">
+        <button id="webcamButton">Get camera</button>
+        <select id="select">
+          <option></option>
+        </select>
+      </div>
 
     
     <section id="demos" class="invisible" >
@@ -23,7 +28,8 @@
       
       <div id="liveView" class="camView">
         
-        <button id="webcamButton">Enable Webcam</button>
+        
+        <!-- <button id="webcamButton">Enable Webcam</button> -->
         <video id="webcam" autoplay width="640" height="480"></video>
       </div>
     </section>

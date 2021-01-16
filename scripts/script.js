@@ -14,23 +14,67 @@
  * limitations under the License.
  * =============================================================================
  */
-navigator.mediaDevices.enumerateDevices().then(function (devices) {
-    for(var i = 0; i < devices.length; i ++){
-        var device = devices[i];
-        if (device.kind === 'videoinput') {
-            var option = document.createElement('option');
-            option.value = device.deviceId;
-            option.text = device.label || 'camera ' + (i + 1);
-            document.querySelector('select#videoSource').appendChild(option);
-        }
-    };
+const video = document.getElementById('webcam');
+const button = document.getElementById('webcamButton');
+const select = document.getElementById('select');
+let currentStream;
+
+function stopMediaTracks(stream) {
+  stream.getTracks().forEach(track => {
+    track.stop();
+  });
+}
+
+function gotDevices(mediaDevices) {
+  select.innerHTML = '';
+  select.appendChild(document.createElement('option'));
+  let count = 1;
+  mediaDevices.forEach(mediaDevice => {
+    if (mediaDevice.kind === 'videoinput') {
+      const option = document.createElement('option');
+      option.value = mediaDevice.deviceId;
+      const label = mediaDevice.label || `Camera ${count++}`;
+      const textNode = document.createTextNode(label);
+      option.appendChild(textNode);
+      select.appendChild(option);
+    }
+  });
+}
+
+button.addEventListener('click', event => {
+  if (typeof currentStream !== 'undefined') {
+    stopMediaTracks(currentStream);
+  }
+  const videoConstraints = {};
+  if (select.value === '') {
+    videoConstraints.facingMode = 'environment';
+  } else {
+    videoConstraints.deviceId = { exact: select.value };
+  }
+  const constraints = {
+    video: videoConstraints,
+    audio: false
+  };
+  navigator.mediaDevices
+    .getUserMedia(constraints)
+    .then(stream => {
+      currentStream = stream;
+      video.srcObject = stream;
+      return navigator.mediaDevices.enumerateDevices();
+    })
+    .then(gotDevices)
+    .catch(error => {
+      console.error(error);
+    });
 });
 
+navigator.mediaDevices.enumerateDevices().then(gotDevices);
 
 
 
 
-const video = document.getElementById('webcam');
+
+// const video = document.getElementById('webcam');
 const liveView = document.getElementById('liveView');
 const demosSection = document.getElementById('demos');
 const enableWebcamButton = document.getElementById('webcamButton');
