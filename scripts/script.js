@@ -51,7 +51,7 @@ button.addEventListener('click', event => {
   if (typeof currentStream !== 'undefined') {
     stopMediaTracks(currentStream);
   }
-  const videoConstraints = {};
+  const videoConstraints = {width: {exact: 640}, height: {exact: 480}};
   if (select.value === '') {
     videoConstraints.facingMode = 'environment';
   } else {
